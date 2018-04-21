@@ -43,6 +43,8 @@
 
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
+        var district;
+
         $(document).ready(function() {
             $('#SelectDistrict').change(function() {
                 var val = $(this).val();
@@ -66,7 +68,10 @@
                                     });
                                 });
 
-                                var district = new google.maps.Polygon({
+                                if(district)
+                                    district.setMap(null);
+
+                                district = new google.maps.Polygon({
                                     paths: boundary,
                                     strokeColor: '#FF0000',
                                     strokeOpacity: 0.8,
@@ -86,6 +91,11 @@
                             }
                         }
                     });
+                }
+                else if(district)
+                {
+                    district.setMap(null);
+                    district = null;
                 }
             });
         });
